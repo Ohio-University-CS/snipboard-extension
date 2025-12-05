@@ -27,17 +27,17 @@
       },
       {
         "command": "snipboard.insertSnippet",
-        "title": "Insert Snippet",
+        "title": "Snipboard: Insert Snippet",
         "description": "Insert a snippet at cursor position"
       },
       {
         "command": "snipboard.copySnippet",
-        "title": "Copy Snippet",
+        "title": "Snipboard: Copy Snippet",
         "description": "Copy a snippet to clipboard"
       },
       {
         "command": "snipboard.refreshExplorer",
-        "title": "Refresh Snippet Explorer",
+        "title": "Snipboard: Refresh Snippet Explorer",
         "description": "Refresh the snippet tree view"
       }
     ],
