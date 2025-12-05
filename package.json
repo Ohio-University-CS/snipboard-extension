@@ -9,15 +9,62 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "snipboard.helloWorld",
-        "title": "Hello World"
+        "command": "snipboard.saveSnippet",
+        "title": "Snipboard: Save Snippet",
+        "description": "Save selected code as a snippet"
+      },
+      {
+        "command": "snipboard.searchSnippet",
+        "title": "Snipboard: Search Snippets",
+        "description": "Search and insert snippets for current language"
+      },
+      {
+        "command": "snipboard.insertSnippet",
+        "title": "Insert Snippet",
+        "description": "Insert a snippet at cursor position"
+      },
+      {
+        "command": "snipboard.copySnippet",
+        "title": "Copy Snippet",
+        "description": "Copy a snippet to clipboard"
+      },
+      {
+        "command": "snipboard.refreshExplorer",
+        "title": "Refresh Snippet Explorer",
+        "description": "Refresh the snippet tree view"
       }
-    ]
+    ],
+    "views": {
+      "explorer": [
+        {
+          "id": "snippetExplorer",
+          "name": "Snippets",
+          "description": "Browse and manage your code snippets",
+          "contextualTitle": "Snippets"
+        }
+      ]
+    },
+    "menus": {
+      "view/item/context": [
+        {
+          "command": "snipboard.insertSnippet",
+          "when": "view == snippetExplorer && viewItem == snippet",
+          "group": "inline@1"
+        },
+        {
+          "command": "snipboard.copySnippet",
+          "when": "view == snippetExplorer && viewItem == snippet",
+          "group": "inline@2"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
@@ -27,8 +74,12 @@
     "lint": "eslint src",
     "test": "vscode-test"
   },
+  "dependencies": {
+    "sqlite3": "^5.1.6"
+  },
   "devDependencies": {
     "@types/vscode": "^1.106.1",
+    "@types/sqlite3": "^3.1.11",
     "@types/mocha": "^10.0.10",
     "@types/node": "22.x",
     "typescript-eslint": "^8.46.3",
