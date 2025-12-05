@@ -107,7 +107,7 @@ async function handleSaveSnippet(context: vscode.ExtensionContext) {
         return;
     }
 
-    SaveSnippetPanel.createOrShow(context.extensionUri, selectedText, language);
+    SaveSnippetPanel.createOrShow(context.extensionUri, selectedText, language, treeProvider);
 }
 
 async function handleSearchSnippet() {
@@ -177,7 +177,7 @@ function handleInsertSnippet(snippet: Snippet) {
         editBuilder.insert(editor.selection.active, snippet.contents);
     });
 
-    db.incrementStats(snippet.id).catch((err) => {
+    db.incrementTimesCopied(snippet.id).catch((err) => {
         console.error('Error incrementing stats:', err);
     });
     treeProvider.refresh();
@@ -189,7 +189,7 @@ function handleCopySnippet(snippet: Snippet) {
     const db = DatabaseManager.getInstance();
 
     vscode.env.clipboard.writeText(snippet.contents);
-    db.incrementStats(snippet.id).catch((err) => {
+    db.incrementTimesCopied(snippet.id).catch((err) => {
         console.error('Error incrementing stats:', err);
     });
     treeProvider.refresh();

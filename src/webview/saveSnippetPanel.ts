@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { DatabaseManager, Tag } from '../db/sqliteService';
+import { SnippetTreeProvider } from '../providers/snippetTreeProvider';
 
 export class SaveSnippetPanel {
     public static readonly viewType = 'saveSnippetPanel';
@@ -9,11 +10,13 @@ export class SaveSnippetPanel {
     private readonly _extensionUri: vscode.Uri;
     private _disposables: vscode.Disposable[] = [];
     private db: DatabaseManager;
+    private treeProvider: SnippetTreeProvider;
 
     public static createOrShow(
         extensionUri: vscode.Uri,
         selectedText: string,
-        language: string
+        language: string,
+        treeProvider: SnippetTreeProvider
     ) {
         const column = vscode.window.activeTextEditor
             ? vscode.window.activeTextEditor.viewColumn
@@ -27,7 +30,8 @@ export class SaveSnippetPanel {
                 extensionUri,
                 column || vscode.ViewColumn.One,
                 selectedText,
-                language
+                language,
+                treeProvider
             );
         }
     }
@@ -36,10 +40,12 @@ export class SaveSnippetPanel {
         extensionUri: vscode.Uri,
         column: vscode.ViewColumn,
         selectedText: string,
-        language: string
+        language: string,
+        treeProvider: SnippetTreeProvider
     ) {
         this._extensionUri = extensionUri;
         this.db = DatabaseManager.getInstance();
+        this.treeProvider = treeProvider;
 
         this._panel = vscode.window.createWebviewPanel(
             SaveSnippetPanel.viewType,
@@ -320,6 +326,8 @@ export class SaveSnippetPanel {
                     );
 
                     vscode.window.showInformationMessage(`✓ Snippet "${message.name}" saved successfully!`);
+                    // Refresh tree view to show the new snippet with its tags
+                    this.treeProvider.refresh();
                     this._panel.dispose();
                 } catch (error) {
                     vscode.window.showErrorMessage(`Failed to save snippet: ${error}`);

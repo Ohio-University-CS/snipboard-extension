@@ -102,40 +102,48 @@ export class DatabaseManager {
             this.db.run(
                 'INSERT INTO Snippet (name, description, language, contents, folder, favorite, timesCopied) VALUES (?, ?, ?, ?, NULL, 0, 0)',
                 [name, description, language, contents],
-                function (this: any, err: Error | null) {
+                (err: Error | null) => {
                     if (err) {
                         reject(err);
                         return;
                     }
 
-                    const snippetId = this.lastID;
-                    let completed = 0;
-                    let hasError = false;
+                    // Get the last inserted ID
+                    this.db.get('SELECT last_insert_rowid() as id', (err: Error | null, row: any) => {
+                        if (err) {
+                            reject(err);
+                            return;
+                        }
 
-                    if (tagIds.length === 0) {
-                        resolve(snippetId);
-                        return;
-                    }
+                        const snippetId = row.id;
+                        let completed = 0;
+                        let hasError = false;
+                        
+                        // resolve if no tags
+                        if (tagIds.length === 0) {
+                            resolve(snippetId);
+                            return;
+                        }
 
-                    // Insert tag links
-                    for (const tagId of tagIds) {
-                        this.db.run(
-                            'INSERT INTO SnippetTagLink (snippetId, tagId) VALUES (?, ?)',
-                            [snippetId, tagId],
-                            (err: Error | null) => {
-                                if (err && !hasError) {
-                                    hasError = true;
-                                    reject(err);
-                                    return;
+                        // Insert tag links
+                        for (const tagId of tagIds) {
+                            this.db.run(
+                                'INSERT INTO SnippetTagLink (snippetId, tagId) VALUES (?, ?)',
+                                [snippetId, tagId],
+                                (err: Error | null) => {
+                                    if (err && !hasError) {
+                                        hasError = true;
+                                        reject(err);
+                                        return;
+                                    }
+                                    completed++;
+                                    if (completed === tagIds.length && !hasError) {
+                                        resolve(snippetId);
+                                    }
                                 }
-
-                                completed++;
-                                if (completed === tagIds.length && !hasError) {
-                                    resolve(snippetId);
-                                }
-                            }
-                        );
-                    }
+                            );
+                        }
+                    });
                 }
             );
         });
@@ -144,7 +152,7 @@ export class DatabaseManager {
     /**
      * Increment the timesCopied counter for a snippet
      */
-    public async incrementStats(snippetId: number): Promise<void> {
+    public async incrementTimesCopied(snippetId: number): Promise<void> {
         return new Promise((resolve, reject) => {
             this.db.run(
                 'UPDATE Snippet SET timesCopied = timesCopied + 1 WHERE id = ?',
