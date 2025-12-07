@@ -1,71 +1,67 @@
-# snipboard README
+# Snipboard
 
-This is the README for your extension "snipboard". After writing up a brief description, we recommend including the following sections.
+A VS Code extension for Snipboard, the code snippet manager
 
-## Features
+## Getting Started
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+### Prerequisites
 
-For example if there is an image subfolder under your extension project workspace:
+- Node.js (v18 or higher)
+- VS Code (v1.106.1 or higher)
 
-\!\[feature X\]\(images/feature-x.png\)
+### Installation
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd snipboard-extension
+```
 
-## Requirements
+2. Install dependencies:
+```bash
+npm install
+```
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+3. Configure your Snipboard database path in `.env`:
+```bash
+DB_PATH=/path/to/your/snipboard.db
+```
 
-## Extension Settings
+### Running the Extension
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+**Development Mode:**
+```bash
+npm run watch
+```
+This starts the TypeScript compiler in watch mode and automatically recompiles on changes.
 
-For example:
+**Build:**
+```bash
+npm run compile
+```
+Compiles TypeScript to JavaScript in the `out/` directory.
 
-This extension contributes the following settings:
+**Launch in VS Code:**
+1. Press `F5` to open the extension in a new VS Code window
+2. Or go to Run → Start Debugging
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+### Features
 
-## Known Issues
+- **Save Snippets**: Select code and save it as a reusable snippet with tags
+- **Search Snippets**: Quickly search and insert snippets for your current language
+- **Browse Snippets**: View all snippets organized by tags in the sidebar
+- **Copy to Clipboard**: Copy snippets without inserting them
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+### Commands
 
-## Release Notes
+- `Snipboard: Save Snippet` - Save selected code as a snippet
+- `Snipboard: Search Snippets` - Search and insert snippets
+- `Snipboard: Refresh Snippet Explorer` - Refresh the snippet tree view
 
-Users appreciate release notes as you update your extension.
+### Context Menu
 
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
+Right-click on snippets in the explorer to:
+- **Insert** - Insert snippet at cursor
+- **Copy** - Copy snippet to clipboard
 
 ---
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
