@@ -1,4 +1,4 @@
-# Snipboard
+# Snipboard VSCode Extension
 
 A VS Code extension for Snipboard, the code snippet manager
 
