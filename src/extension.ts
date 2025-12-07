@@ -9,9 +9,6 @@ let treeProvider: SnippetTreeProvider;
 export function activate(context: vscode.ExtensionContext) {
     console.log('Snipboard extension is now active!');
 
-    // Initialize database
-    const db = DatabaseManager.getInstance();
-
     // Initialize tree view
     treeProvider = new SnippetTreeProvider();
     vscode.window.registerTreeDataProvider('snippetExplorer', treeProvider);
@@ -127,6 +124,7 @@ async function handleSearchSnippet() {
 
     let debounceTimer: NodeJS.Timeout;
 
+    // When user types
     quickPick.onDidChangeValue(async (query) => {
         clearTimeout(debounceTimer);
 
@@ -135,13 +133,14 @@ async function handleSearchSnippet() {
             return;
         }
 
+        // Map snippets returned by query to the quickpick items
         debounceTimer = setTimeout(async () => {
             try {
                 const snippets = await db.searchSnippets(query, language);
                 quickPick.items = snippets.map((snippet) => ({
                     label: snippet.name,
                     description: snippet.description,
-                    detail: `${snippet.language} • Copied ${snippet.timesCopied} times`,
+                    detail: `${snippet.language} - Copied ${snippet.timesCopied} times`,
                     snippet,
                 }));
             } catch (error) {
@@ -150,6 +149,7 @@ async function handleSearchSnippet() {
         }, 300);
     });
 
+    // Insert snippet if one was selected
     quickPick.onDidAccept(() => {
         const selected = quickPick.selectedItems[0] as any;
         if (selected && selected.snippet) {
@@ -173,6 +173,7 @@ function handleInsertSnippet(snippet: Snippet) {
 
     const db = DatabaseManager.getInstance();
 
+    // Insert snippet content and update the timesCopied in database
     editor.edit((editBuilder) => {
         editBuilder.insert(editor.selection.active, snippet.contents);
     });
@@ -180,19 +181,20 @@ function handleInsertSnippet(snippet: Snippet) {
     db.incrementTimesCopied(snippet.id).catch((err) => {
         console.error('Error incrementing stats:', err);
     });
-    treeProvider.refresh();
+    treeProvider.refresh(); // update treeProvider
 
-    vscode.window.showInformationMessage(`✓ Inserted "${snippet.name}"`);
+    vscode.window.showInformationMessage(`Inserted "${snippet.name}"`);
 }
 
 function handleCopySnippet(snippet: Snippet) {
     const db = DatabaseManager.getInstance();
 
+    // Set clipboard and update DB with timesCopied
     vscode.env.clipboard.writeText(snippet.contents);
     db.incrementTimesCopied(snippet.id).catch((err) => {
         console.error('Error incrementing stats:', err);
     });
     treeProvider.refresh();
 
-    vscode.window.showInformationMessage(`✓ Copied "${snippet.name}" to clipboard`);
+    vscode.window.showInformationMessage(`Copied "${snippet.name}" to clipboard`);
 }

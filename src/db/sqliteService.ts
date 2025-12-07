@@ -4,9 +4,8 @@ import * as os from 'os';
 import * as fs from 'fs';
 
 // Database is in src/db/snipboard.db, but this code compiles to out/db/
-// So from out/db, we need to go up two levels to reach src/db
 // const DB_PATH = path.join(__dirname, '..', '..', 'src', 'db', 'snipboard.db');
-const DB_PATH = path.join(__dirname, '..', '..', '..', '..', 'snipboard', 'build', 'snipboard.db');
+const DB_PATH = path.join(__dirname, '..', '..', '..', '..', 'snipboard', 'build', 'snipboard.db'); // path to my local DB
 
 
 export interface Tag {

@@ -27,12 +27,12 @@
       },
       {
         "command": "snipboard.insertSnippet",
-        "title": "Snipboard: Insert Snippet",
+        "title": "Insert",
         "description": "Insert a snippet at cursor position"
       },
       {
         "command": "snipboard.copySnippet",
-        "title": "Snipboard: Copy Snippet",
+        "title": "Copy",
         "description": "Copy a snippet to clipboard"
       },
       {

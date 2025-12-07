@@ -106,8 +106,6 @@ export class SnippetTreeItem extends vscode.TreeItem {
         super(label, collapsibleState);
         
         // Create unique IDs for each tree node
-        // For tags and untagged: just use type_id
-        // For snippets: include parent tag to make it unique even if snippet appears under multiple tags
         if (type === 'snippet' && parentTagId !== undefined) {
             this.id = `snippet_${numId}_tag_${parentTagId}`;
         } else if (type === 'snippet') {
