@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { DatabaseManager, Tag, Snippet } from '../db/sqliteService';
+import { DatabaseManager } from '../db/sqliteService';
 
 export class SnippetTreeProvider implements vscode.TreeDataProvider<SnippetTreeItem> {
     private _onDidChangeTreeData: vscode.EventEmitter<SnippetTreeItem | undefined | null | void> =

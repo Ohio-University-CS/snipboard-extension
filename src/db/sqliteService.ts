@@ -1,12 +1,12 @@
 import sqlite3 from 'sqlite3';
 import * as path from 'path';
-import * as os from 'os';
-import * as fs from 'fs';
+import * as dotenv from 'dotenv';
 
-// Database is in src/db/snipboard.db, but this code compiles to out/db/
-// const DB_PATH = path.join(__dirname, '..', '..', 'src', 'db', 'snipboard.db');
-const DB_PATH = path.join(__dirname, '..', '..', '..', '..', 'snipboard', 'build', 'snipboard.db'); // path to my local DB
+// Load environment variables from .env file
+dotenv.config();
 
+// Get database path from environment variable or use default
+const DB_PATH = process.env.DB_PATH || path.join(__dirname, '..', '..', '..', 'snipboard', 'build', 'snipboard.db');
 
 export interface Tag {
     id: number;
@@ -74,7 +74,7 @@ export class DatabaseManager {
         const searchPattern = `%${query}%`;
         return new Promise((resolve, reject) => {
             this.db.all(
-                'SELECT * FROM Snippet WHERE (name LIKE ? OR description LIKE ?) AND language = ? ORDER BY name ASC',
+                'SELECT * FROM Snippet WHERE (name LIKE ? OR description LIKE ?) AND language = ? ORDER BY timesCopied DESC',
                 [searchPattern, searchPattern, language],
                 (err: Error | null, rows: any) => {
                     if (err) {

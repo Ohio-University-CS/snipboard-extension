@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { DatabaseManager, Tag } from '../db/sqliteService';
+import { DatabaseManager } from '../db/sqliteService';
 import { SnippetTreeProvider } from '../providers/snippetTreeProvider';
 
 export class SaveSnippetPanel {

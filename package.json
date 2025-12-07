@@ -75,7 +75,8 @@
     "test": "vscode-test"
   },
   "dependencies": {
-    "sqlite3": "^5.1.6"
+    "sqlite3": "^5.1.6",
+    "dotenv": "^16.4.1"
   },
   "devDependencies": {
     "@types/vscode": "^1.106.1",
