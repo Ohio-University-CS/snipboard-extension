@@ -1,6 +1,6 @@
 # Snipboard VSCode Extension
 
-A VS Code extension for (Snipboard)[https://github.com/Ohio-University-CS/snipboard-extension], the code snippet manager
+A VS Code extension for [Snipboard](https://github.com/Ohio-University-CS/snipboard-extension), the code snippet manager
 
 ## Getting Started
 
