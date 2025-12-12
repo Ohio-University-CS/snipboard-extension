@@ -1,4 +1,4 @@
-# Snipboard
+# SnipBoard VSCode Extension
 
 ## Project Description
 
@@ -7,7 +7,7 @@ Its purpose is to help developers stay focused, reuse their best code, and elimi
 
 ## Demo
 
-![Snipboard Demo](static/demo.gif)
+![Snipboard Demo](static/extension-demo.gif)
 
 ## Features
 
