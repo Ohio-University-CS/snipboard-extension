@@ -6,8 +6,9 @@ This is a VSCode extension for [SnipBoard](https://github.com/Ohio-University-CS
 Its purpose is to help developers stay focused, reuse their best code, and eliminate the time wasted digging through old projects, screenshots, and notes for small pieces of reusable logic.
 
 ## Demo
-
-![Snipboard Demo](static/extension-demo.gif)
+<div style="text-align: center;">
+  <img src="static/extension-demo.gif" width="600" alt="Extension Demo">
+</div>
 
 ## Features
 
